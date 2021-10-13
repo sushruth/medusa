@@ -16,6 +16,7 @@ const webpack = require("webpack");
  * @typedef FederationDashboardPluginOptions
  * @property {string} filename
  * @property {function} reportFunction
+ * @property {string} [packageJsonPath]
  */
 
 const PLUGIN_NAME = "FederationDashboardPlugin";
@@ -360,7 +361,7 @@ class FederationDashboardPlugin {
     let packageJson;
     this._webpackContext = liveStats.compilation.options.context;
     try {
-      packageJson = require(path.join(
+      packageJson = this._options.packageJsonPath ? require(path.resolve(this._options.packageJsonPath)) : require(path.join(
         liveStats.compilation.options.context,
         "package.json"
       ));
